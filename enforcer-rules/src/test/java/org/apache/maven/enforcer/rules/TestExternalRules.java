@@ -98,4 +98,17 @@ class TestExternalRules {
         assertNotNull(rulesConfig);
         assertEquals(2, rulesConfig.getChildCount());
     }
+
+    @Test
+    void shouldLoadRulesFromSystemProperty() throws EnforcerRuleException {
+        System.setProperty("enforcer.externalRules.location", "classpath:enforcer-rules/pass.xml");
+        MojoDescriptor mojoDescriptor = new MojoDescriptor();
+        mojoDescriptor.setRealm(EnforcerTestUtils.getTestClassRealm());
+        when(mojoExecution.getMojoDescriptor()).thenReturn(mojoDescriptor);
+
+        Xpp3Dom rulesConfig = rule.getRulesConfig();
+        assertNotNull(rulesConfig);
+        assertEquals(2, rulesConfig.getChildCount());
+    }
+
 }

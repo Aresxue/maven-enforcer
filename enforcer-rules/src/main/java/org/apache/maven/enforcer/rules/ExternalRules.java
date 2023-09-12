@@ -82,6 +82,11 @@ public final class ExternalRules extends AbstractEnforcerRuleConfigProvider {
 
     private InputStream resolveDescriptor() throws EnforcerRuleError {
         InputStream descriptorStream;
+        // If not exist, get it from the system property to better support the command line
+        if (null == location )
+        {
+            location = System.getProperty( "enforcer.externalRules.location" );
+        }
         if (location != null) {
             if (location.startsWith(LOCATION_PREFIX_CLASSPATH)) {
                 String classpathLocation = location.substring(LOCATION_PREFIX_CLASSPATH.length());
